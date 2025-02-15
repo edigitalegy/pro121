@@ -1,0 +1,19 @@
+body {
+    text-align: right; /* Align text to the right for Arabic */
+    direction: rtl;
+  }
+  .hidden { display: none; }
+  .correct-answer { color: green; font-weight: bold; }
+  .wrong-answer { color: red; }
+  .icon { margin-right: 5px; font-weight: bold; }
+  .check-icon { color: green; }
+  .cross-icon { color: red; }
+  .feedback { margin-top: 10px; }
+  .form-check-label {
+    text-align: right; /* Right align the labels */
+  }
+  .form-check {
+    display: flex;
+    align-items: center; /* Center align items */
+  }
+  
