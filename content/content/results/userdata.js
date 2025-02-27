@@ -28,11 +28,11 @@ function loadEssayResults() {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        essayResultsContainer.innerHTML = "<p class='text-center'>لا توجد نتائج بيانات لعرضها.</p>";
+        essayResultsContainer.innerHTML = "<p class='text-center'>لا توجد نتائج للمقال لعرضها.</p>";
         return;
       }
       
-      // Build the HTML table header with "العدد" column.
+      // Build the HTML table header with "العدد" and "حذف" (Delete) column.
       let tableHTML = `
         <table class="table table-bordered table-striped">
           <thead class="table-light">
@@ -42,27 +42,31 @@ function loadEssayResults() {
               <th>البريد الإلكتروني</th>
               <th>اسم المستخدم</th>
               <th>التاريخ والوقت</th>
+              <th>إجراء</th>  <!-- Action column for delete button -->
             </tr>
           </thead>
           <tbody>
       `;
 
-      // Add rows with index numbers
       let index = 1;  // Start index from 1
 
       snapshot.forEach(doc => {
         const data = doc.data();
+        const docId = doc.id;  // Get document ID for deletion
         const createdAt = data.createdAt 
           ? data.createdAt.toDate().toLocaleString("ar-EG") 
           : "غير متاح";
 
         tableHTML += `
-          <tr>
-            <td>${index}</td>  <!-- This is the new "العدد" column -->
+          <tr id="row-${docId}">
+            <td>${index}</td>  
             <td>${data.name || "غير متوفر"}</td>
             <td>${data.email || "غير متوفر"}</td>
             <td>${data.user || "غير متوفر"}</td>
             <td>${createdAt}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="deleteUser('${docId}')">حذف</button>
+            </td>
           </tr>
         `;
 
@@ -73,8 +77,23 @@ function loadEssayResults() {
       essayResultsContainer.innerHTML = tableHTML;
     })
     .catch(error => {
-      essayResultsContainer.innerHTML = `<p class="text-danger text-center">حدث خطأ أثناء تحميل نتائج البيانات: ${error.message}</p>`;
+      essayResultsContainer.innerHTML = `<p class="text-danger text-center">حدث خطأ أثناء تحميل نتائج المقال: ${error.message}</p>`;
     });
+}
+
+// Function to delete a user file from Firestore
+function deleteUser(docId) {
+  if (confirm("هل أنت متأكد أنك تريد حذف هذا المستخدم؟")) {
+    db.collection("usersid").doc(docId)
+      .delete()
+      .then(() => {
+        alert("تم حذف المستخدم بنجاح!");
+        document.getElementById(`row-${docId}`).remove();  // Remove row from the table
+      })
+      .catch(error => {
+        alert("حدث خطأ أثناء الحذف: " + error.message);
+      });
+  }
 }
 
 // Load essay results when the page loads.
