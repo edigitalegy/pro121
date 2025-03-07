@@ -58,7 +58,7 @@ auth.onAuthStateChanged(async user => {
 });
 
 adminbutton.addEventListener('click', () => {
-    window.open('results.html', '_blank');
+    window.open('results.html', '_self');
   });
 
 /***********************************form firebase**************************************************************/
