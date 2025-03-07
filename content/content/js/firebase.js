@@ -42,7 +42,8 @@ auth.onAuthStateChanged(async user => {
               
               // Check if the role is 'admin'
               if (userData.user === "adminsara") {
-                  document.getElementById("admin-button").classList.add('show');
+                  adminbutton.classList.add('show');
+                  adminbutton.style.cursor = 'pointer';                 
                   adminbutton.disabled = false; // Show admin button
                   adminbutton.addEventListener('click', () => {
     window.open('results.html', '_self');
