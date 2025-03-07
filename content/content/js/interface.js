@@ -4,7 +4,6 @@ const muser = document.querySelector('.container .menu-list');
 const chatai = document.querySelector('.chatai');
 const menuList = document.querySelector(".container .menu-list");
 const userIcon = document.querySelector(".user");
-const adminbutton = document.getElementById('admin-button');
 /*************************************elements button******************************************/
 const btnpretest = document.getElementById('btnpretest');
 const btnposttest = document.getElementById('btnposttest');
