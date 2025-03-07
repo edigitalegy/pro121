@@ -44,6 +44,9 @@ auth.onAuthStateChanged(async user => {
               if (userData.user === "adminsara") {
                   document.getElementById("admin-button").classList.add('show');
                   adminbutton.disabled = false; // Show admin button
+                  adminbutton.addEventListener('click', () => {
+    window.open('results.html', '_self');
+  });
               }
           } else {
               console.warn("User document not found in Firestore.");
@@ -57,9 +60,7 @@ auth.onAuthStateChanged(async user => {
   }
 });
 
-adminbutton.addEventListener('click', () => {
-    window.open('results.html', '_self');
-  });
+
 
 /***********************************form firebase**************************************************************/
   const formElement = document.getElementById('form-atricle');
