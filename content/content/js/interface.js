@@ -5,7 +5,6 @@ const chatai = document.querySelector('.chatai');
 const menuList = document.querySelector(".container .menu-list");
 const userIcon = document.querySelector(".user");
 const adminbutton = document.getElementById('admin-button');
-adminbutton.disabled = true;
 /*************************************elements button******************************************/
 const btnpretest = document.getElementById('btnpretest');
 const btnposttest = document.getElementById('btnposttest');
@@ -61,11 +60,6 @@ user.addEventListener('click', () => {
   const menuWidth = menuList.offsetWidth ; // Get the actual width of menu-list
   userIcon.style.setProperty("--menu-width", `${menuWidth}px`); // Update CSS variable
 });
-
-adminbutton.addEventListener('click', () => {
-  window.open('results.html', '_blank');
-});
-
 /************************************************************************/
 const pages = ["cont1.html", "cont2.html","cont3.html","cont4.html","cont5.html","cont6.html"];
 
