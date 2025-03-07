@@ -24,6 +24,7 @@ if (!firebase.apps.length) {
   let namearticle;
   let emailarticle;
   const adminbutton = document.getElementById("admin-button");
+  adminbutton.disabled = true;
 // Check if the user is logged in
 auth.onAuthStateChanged(async user => {
   if (user) {
@@ -41,8 +42,8 @@ auth.onAuthStateChanged(async user => {
               
               // Check if the role is 'admin'
               if (userData.user === "adminsara") {
-                  document.getElementById("admin-button").classList.add('show'); // Show admin button
-                   adminbutton.disabled = false; // Show admin button
+                  document.getElementById("admin-button").classList.add('show');
+                  adminbutton.disabled = false; // Show admin button
               }
           } else {
               console.warn("User document not found in Firestore.");
@@ -56,6 +57,9 @@ auth.onAuthStateChanged(async user => {
   }
 });
 
+adminbutton.addEventListener('click', () => {
+    window.open('results.html', '_blank');
+  });
 
 /***********************************form firebase**************************************************************/
   const formElement = document.getElementById('form-atricle');
