@@ -6,7 +6,7 @@ const backpage ="./cont1.html";
 // ========= vaiables =========
 
 let currentQuestionIndex = 0; // Track the current question
-let userAnswers = [];         // Store user answers for review
+let userAnswers = new Array(quizData.length).fill(""); // ✅ Initialize with empty values
 let correctAnswersCount = 0;   // Count correct answers
 
 const nextButton = document.getElementById('next-btn');
@@ -56,6 +56,10 @@ function displayQuestion() {
     inputField.classList.add('form-control');
     inputField.placeholder = 'اكتب إجابتك هنا...';
     inputField.id = 'answer-input';
+
+    inputField.value = userAnswers[currentQuestionIndex] || "";
+
+
     questionCard.appendChild(inputField);
   } else 
   {
@@ -70,6 +74,11 @@ function displayQuestion() {
       optionInput.setAttribute('type', 'radio');
       optionInput.setAttribute('name', 'question');
       optionInput.setAttribute('value', option);
+
+      if (userAnswers[currentQuestionIndex] === option) {
+        optionInput.checked = true;
+      }
+
       optionInput.onclick = () => handleAnswer(option);
 
       // Append radio input before the text.
@@ -91,7 +100,29 @@ function displayQuestion() {
   prevButton.disabled = (currentQuestionIndex === 0);
 }
 
+
+
+function saveUserAnswer() {
+  const item = quizData[currentQuestionIndex];
+
+  if (item.options.length === 0) {
+    // Text input question
+    const inputField = document.getElementById("answer-input");
+    if (inputField) {
+      userAnswers[currentQuestionIndex] = inputField.value.trim();
+    }
+  } else {
+    // Multiple-choice question
+    const selectedOption = document.querySelector('input[name="question"]:checked');
+    if (selectedOption) {
+      userAnswers[currentQuestionIndex] = selectedOption.value;
+    }
+  }
+}
+
+
 function previousQuestion() {
+  saveUserAnswer(); 
   if (currentQuestionIndex > 0) {
     currentQuestionIndex--;
     displayQuestion();
@@ -102,6 +133,8 @@ function previousQuestion() {
 }
 
 function nextQuestion() {
+  saveUserAnswer(); // ✅ Save the answer before moving
+
     // If the current question uses an input field (header is ""), capture the input value.
     if (quizData[currentQuestionIndex].options.length === 0) {
       const inputField = document.getElementById('answer-input');
@@ -137,6 +170,7 @@ function finishtest()
 function handleAnswer(selectedValue) {
   const item = quizData[currentQuestionIndex];
   userAnswers[currentQuestionIndex] = selectedValue; // Store user's answer
+
 
   // Highlight selected answer and show feedback
   const selectedInput = document.querySelector('input[name="question"]:checked');
