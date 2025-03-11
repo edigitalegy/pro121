@@ -78,7 +78,7 @@ function loadData() {
 
 // Function to show reviewData for a specific quizResults document in a modal
 function showReviewData(docId) {
-  db.collection("readpretest").doc(docId).get()
+  db.collection("readprettest").doc(docId).get()
     .then(docSnapshot => {
       if (docSnapshot.exists) {
         const data = docSnapshot.data();
@@ -121,7 +121,7 @@ window.onload = loadData;
 //*************************CSV*********************************/
 // Function to export test results as a CSV file and download it.
 function exportResults() {
-  db.collection("readpretest").orderBy("timestamp", "desc")
+  db.collection("readprettest").orderBy("timestamp", "desc")
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
