@@ -27,7 +27,7 @@ function goHome() {
 function loadData() {
   const dataTable = document.getElementById("data-table");
 
-  db.collection("readpretest").orderBy("timestamp", "desc")
+  db.collection("readprettest").orderBy("timestamp", "desc")
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
